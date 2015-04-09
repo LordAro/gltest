@@ -2,13 +2,12 @@
 #include <string>
 
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_image.h>
 #include <GL/glew.h>
 #include <GL/gl.h>
 
-#include <SOIL/SOIL.h>
-
 #include "video.h"
-
+#include "texture.h"
 
 Video::Video() : running(true)
 {
@@ -30,6 +29,12 @@ Video::Video() : running(true)
 	if (this->window == nullptr) {
 		std::string err = "Error creating SDL window: ";
 		err += SDL_GetError();
+		throw std::runtime_error(err);
+	}
+
+	if ((IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG) != IMG_INIT_PNG) {
+		std::string err = "Error initialising SDL_image: ";
+		err += IMG_GetError();
 		throw std::runtime_error(err);
 	}
 
@@ -132,6 +137,9 @@ void Video::Render()
 
 	glPushMatrix();
 	{
+		_sprite_container.OnDraw();
+		const char *glerr = (const char *)gluErrorString(glGetError());
+		printf("Error creating texture: %s\n", glerr);
 	}
 	glPopMatrix();
 
