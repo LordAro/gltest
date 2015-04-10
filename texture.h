@@ -1,6 +1,7 @@
 #ifndef TEXTURE_H
 #define TEXTURE_H
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -10,10 +11,11 @@
 class Texture {
 public:
 	Texture(const std::string &filepath);
+	Texture(const Texture&) = delete;
 
 	~Texture();
 
-	void OnDraw(int x, int y);
+	void OnDraw(int x, int y) const;
 
 private:
 	GLuint texid;
@@ -23,8 +25,8 @@ private:
 
 class Sprite {
 public:
-	Sprite(Texture tex, int x, int y) : tex(tex), x(x), y(y) {}
-	Texture tex;
+	Sprite(Texture *tex, int x, int y) : tex(tex), x(x), y(y) {}
+	std::unique_ptr<Texture> tex;
 	int x, y;
 };
 
@@ -34,8 +36,8 @@ public:
 
 	void OnDraw()
 	{
-		for (auto sprite : this->sprites) {
-			sprite.tex.OnDraw(sprite.x, sprite.y);
+		for (const auto &sprite : this->sprites) {
+			sprite.tex->OnDraw(sprite.x, sprite.y);
 		}
 	}
 };

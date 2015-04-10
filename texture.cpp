@@ -48,7 +48,7 @@ Texture::~Texture()
 	glDeleteTextures(1, &this->texid);
 }
 
-void Texture::OnDraw(int x, int y)
+void Texture::OnDraw(int x, int y) const
 {
 	glColor4f(1, 1, 1, 1); // Black?
 

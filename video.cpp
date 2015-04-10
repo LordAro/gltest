@@ -138,8 +138,6 @@ void Video::Render()
 	glPushMatrix();
 	{
 		_sprite_container.OnDraw();
-		const char *glerr = (const char *)gluErrorString(glGetError());
-		printf("Error creating texture: %s\n", glerr);
 	}
 	glPopMatrix();
 
