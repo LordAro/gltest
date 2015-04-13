@@ -1,3 +1,4 @@
+#include <fstream>
 #include <stdexcept>
 #include <string>
 
@@ -23,9 +24,11 @@ Video::Video() : running(true)
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
-	int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE | SDL_WINDOW_MAXIMIZED;
+	int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
+	int width = 800;
+	int height = 600;
 
-	this->window = SDL_CreateWindow("lolpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, flags);
+	this->window = SDL_CreateWindow("lolpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (this->window == nullptr) {
 		std::string err = "Error creating SDL window: ";
 		err += SDL_GetError();
@@ -75,6 +78,8 @@ Video::Video() : running(true)
 
 	glDisable(GL_DEPTH_TEST); // what's drawn last is displayed on top.
 	glEnable(GL_TEXTURE_2D);
+
+	this->OnResize(width, height);
 }
 
 Video::~Video()
@@ -128,6 +133,30 @@ bool Video::EventLoop()
 		}
 	}
 	return true;
+}
+
+#include <iostream>
+
+void Video::AddShader(int id, Shader *vert, Shader *frag)
+{
+	if (vert == nullptr || frag == nullptr) {
+		auto it = this->shaders.find(id);
+		if (it != this->shaders.end()) {
+			this->shaders.erase(it);
+		} else {
+			throw std::runtime_error("Tried to remove non-existant shader: " + std::to_string(id));
+		}
+	}
+	this->shaders.emplace(std::make_pair(id, std::unique_ptr<ShaderProgram>(new ShaderProgram(vert, frag))));
+}
+
+ShaderProgram *Video::GetShader(int id)
+{
+	auto it = this->shaders.find(id);
+	if (it != this->shaders.end()) {
+		return this->shaders.at(id).get();
+	}
+	return nullptr;
 }
 
 void Video::Render()

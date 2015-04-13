@@ -19,6 +19,7 @@ public:
 
 private:
 	GLuint texid;
+	GLuint vbo;
 	int width;
 	int height;
 };

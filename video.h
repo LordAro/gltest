@@ -1,13 +1,15 @@
 #ifndef VIDEO_H
 #define VIDEO_H
 
+#include <memory>
+#include <unordered_map>
+
 #include <SDL2/SDL.h>
 
 #include <GL/glew.h>
 #include <GL/gl.h>
 
-#include <SOIL/SOIL.h>
-
+#include "shader.h"
 
 class Video {
 public:
@@ -19,13 +21,19 @@ public:
 	void Loop();
 	bool EventLoop();
 
+	void AddShader(int id, Shader *vert, Shader *frag);
+	ShaderProgram *GetShader(int id);
+
 private:
 	void Render();
 
+	std::unordered_map<int, std::unique_ptr<ShaderProgram>> shaders;
 	bool running;
 
 	SDL_Window *window;
 	SDL_GLContext glcontext;
 };
+
+extern Video _vid;
 
 #endif /* VIDEO_H */
