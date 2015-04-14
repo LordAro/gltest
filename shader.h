@@ -25,8 +25,9 @@ public:
 	void StopUsing();
 
 	GLint tex_coord;
-	GLint mvpm_id;
 	GLint pos_id;
+	GLint mvpm_id;
+	GLint grad_shift_id;
 	GLint texture;
 private:
 	GLuint id;

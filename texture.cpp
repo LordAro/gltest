@@ -56,6 +56,9 @@ void Texture::OnDraw(int x, int y) const
 
 	auto shader = _vid.GetShader(0);
 
+	// Update parameters
+	glUniform1i(shader->grad_shift_id, 4);
+
 	shader->Use();
 	int *pos_id = &shader->pos_id;
 	int *texcoord_id = &shader->tex_coord;
