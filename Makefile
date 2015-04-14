@@ -12,10 +12,7 @@ TARGET=gltest
 
 all: $(TARGET)
 
-dir:
-	mkdir -p $(OBJDIR)
-
-$(TARGET): dir $(OBJECTS)
+$(TARGET): $(OBJECTS)
 	$(CXX) $(OBJECTS) $(LDFLAGS) -o $@
 
 $(OBJDIR)/%.o: %.cpp
