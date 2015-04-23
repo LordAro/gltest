@@ -50,8 +50,12 @@ void Texture::OnDraw(int x, int y) const
 	float bottom = y + this->height;
 
 	float vertices[] = {
-	        left,  top, 0, 0, right, top,    1, 0, left,  bottom, 0, 1,
-	        right, top, 1, 0, left,  bottom, 0, 1, right, bottom, 1, 1,
+	        left,  top,    0, 0, // top-left
+	        right, top,    1, 0, // top-right
+	        left,  bottom, 0, 1, // bottom-left
+	        right, top,    1, 0, // top-right
+	        left,  bottom, 0, 1, // bottom-left
+	        right, bottom, 1, 1, // bottom-right
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
