@@ -137,7 +137,6 @@ bool Video::EventLoop()
 	return true;
 }
 
-
 void Video::AddShader(int id, Shader *vert, Shader *frag)
 {
 	if (vert == nullptr || frag == nullptr) {
@@ -165,7 +164,7 @@ ShaderProgram *Video::GetShader(int id)
 
 void Video::Render()
 {
-//	auto start = std::chrono::high_resolution_clock::now();
+	// auto start = std::chrono::high_resolution_clock::now();
 
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -176,10 +175,9 @@ void Video::Render()
 	}
 	glPopMatrix();
 
-
-//	auto end = std::chrono::high_resolution_clock::now();
-//	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-//	std::cout << "Render loop: " << diff.count() << "ms" << std::endl;
+	// auto end = std::chrono::high_resolution_clock::now();
+	// auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	// std::cout << "Render loop: " << diff.count() << "ms" << std::endl;
 
 	SDL_GL_SwapWindow(this->window);
 }

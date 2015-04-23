@@ -50,12 +50,8 @@ void Texture::OnDraw(int x, int y) const
 	float bottom = y + this->height;
 
 	float vertices[] = {
-		left,  top,    0, 0,
-		right, top,    1, 0,
-		left,  bottom, 0, 1,
-		right, top,    1, 0,
-		left,  bottom, 0, 1,
-		right, bottom, 1, 1,
+	        left,  top, 0, 0, right, top,    1, 0, left,  bottom, 0, 1,
+	        right, top, 1, 0, left,  bottom, 0, 1, right, bottom, 1, 1,
 	};
 
 	glBindBuffer(GL_ARRAY_BUFFER, this->vbo);
@@ -63,7 +59,7 @@ void Texture::OnDraw(int x, int y) const
 	glEnableVertexAttribArray(*pos_id);
 	glEnableVertexAttribArray(*texcoord_id);
 	glVertexAttribPointer(*pos_id, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(0));
-	glVertexAttribPointer(*texcoord_id, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2*sizeof(float)));
+	glVertexAttribPointer(*texcoord_id, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 
 	glDrawArrays(GL_TRIANGLES, 0, 6); // 2 triangles
 
@@ -104,8 +100,8 @@ void Texture::OnDraw(int x, int y) const
 			format = GL_RGBA;
 			break;
 		default:
-			throw std::runtime_error("Unknown texture bit depth for " + filepath + " ("
-					+ std::to_string(surface->format->BytesPerPixel) + ")");
+			throw std::runtime_error("Unknown texture bit depth for " + filepath + " (" +
+			                         std::to_string(surface->format->BytesPerPixel) + ")");
 	}
 	*width = surface->w;
 	*height = surface->h;

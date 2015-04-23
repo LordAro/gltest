@@ -8,12 +8,14 @@
 #include <GL/glew.h>
 #include <GL/gl.h>
 
-class Texture {
+class Texture
+{
 public:
-
 	Texture(const std::string &img_path, const std::string &mask_path);
-	Texture(const std::string &img_path) : Texture(img_path, std::string()) {}
-	Texture(const Texture&) = delete;
+	Texture(const std::string &img_path) : Texture(img_path, std::string())
+	{
+	}
+	Texture(const Texture &) = delete;
 
 	~Texture();
 
@@ -24,21 +26,28 @@ public:
 
 private:
 	static GLuint MakeGLTexture(const std::string &filepath, int *width, int *height);
-	inline bool HasMask() const { return maskid == 0; }
+	inline bool HasMask() const
+	{
+		return maskid == 0;
+	}
 
 	GLuint texid;
 	GLuint maskid;
 	GLuint vbo;
 };
 
-class VoxelObject {
+class VoxelObject
+{
 public:
-	VoxelObject(Texture *tex, int x, int y) : tex(tex), x(x), y(y) {}
-	Texture* tex;
+	VoxelObject(Texture *tex, int x, int y) : tex(tex), x(x), y(y)
+	{
+	}
+	Texture *tex;
 	int x, y;
 };
 
-class Container {
+class Container
+{
 public:
 	std::vector<VoxelObject> objects;
 
@@ -51,6 +60,5 @@ public:
 };
 
 extern Container _sprite_container;
-
 
 #endif /* TEXTURE_H */

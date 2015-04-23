@@ -34,8 +34,8 @@ int main()
 
 		auto tile = std::unique_ptr<Texture>(new Texture("tile.png"));
 
-		for (int x = -64; x + tile->width < _vid.width; x+=64) {
-			for (int y = -64; y + tile->height < _vid.height; y+=16) {
+		for (int x = -64; x + tile->width < _vid.width; x += 64) {
+			for (int y = -64; y + tile->height < _vid.height; y += 16) {
 				int x1 = x;
 				if (y % 32 == 0) x1 -= 32;
 				_sprite_container.objects.emplace_back(tile.get(), x1, y);
@@ -51,5 +51,5 @@ int main()
 		return 1;
 	}
 
-    return 0;
+	return 0;
 }

@@ -11,7 +11,8 @@
 
 #include "shader.h"
 
-class Video {
+class Video
+{
 public:
 	Video();
 	~Video();
