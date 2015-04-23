@@ -42,6 +42,9 @@ int main()
 			}
 		}
 
+		auto icecream = std::unique_ptr<Texture>(new Texture("icecream.png", "icecream_mask.png"));
+		_sprite_container.objects.emplace_back(icecream.get(), 544, 256);
+
 		_vid.Loop();
 	} catch (const std::runtime_error &e) {
 		std::cerr << e.what() << std::endl;

@@ -10,7 +10,9 @@
 
 class Texture {
 public:
-	Texture(const std::string &filepath);
+
+	Texture(const std::string &img_path, const std::string &mask_path);
+	Texture(const std::string &img_path) : Texture(img_path, std::string()) {}
 	Texture(const Texture&) = delete;
 
 	~Texture();
@@ -21,7 +23,11 @@ public:
 	int height;
 
 private:
+	static GLuint MakeGLTexture(const std::string &filepath, int *width, int *height);
+	inline bool HasMask() const { return maskid == 0; }
+
 	GLuint texid;
+	GLuint maskid;
 	GLuint vbo;
 };
 
