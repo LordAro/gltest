@@ -24,17 +24,23 @@ std::string LoadFile(const char *filepath)
 int main()
 {
 	try {
-
 		std::string vert_src = LoadFile("normal.vert.glsl");
 		std::string frag_src = LoadFile("normal.frag.glsl");
 		Shader *vert = new Shader(GL_VERTEX_SHADER, vert_src.c_str());
 		Shader *frag = new Shader(GL_FRAGMENT_SHADER, frag_src.c_str());
-
 		_vid.AddShader(0, vert, frag);
 		delete vert;
 		delete frag;
 
-		_sprite_container.sprites.push_back(Sprite(new Texture("awesomeface.png"), 50, 50));
+		auto tile = std::unique_ptr<Texture>(new Texture("tile.png"));
+
+		for (int x = -64; x + tile->width < _vid.width; x+=64) {
+			for (int y = -64; y + tile->height < _vid.height; y+=16) {
+				int x1 = x;
+				if (y % 32 == 0) x1 -= 32;
+				_sprite_container.objects.emplace_back(tile.get(), x1, y);
+			}
+		}
 
 		_vid.Loop();
 	} catch (const std::runtime_error &e) {

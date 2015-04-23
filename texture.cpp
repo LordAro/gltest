@@ -57,7 +57,7 @@ void Texture::OnDraw(int x, int y) const
 	auto shader = _vid.GetShader(0);
 
 	// Update parameters
-	glUniform1i(shader->grad_shift_id, 4);
+	glUniform1i(shader->grad_shift_id, 0);
 
 	shader->Use();
 	int *pos_id = &shader->pos_id;
@@ -90,7 +90,8 @@ void Texture::OnDraw(int x, int y) const
 	glDrawArrays(GL_TRIANGLES, 0, 6); // 2 triangles
 
 	/* Clean up */
-	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glDisableVertexAttribArray(*pos_id);
 	glDisableVertexAttribArray(*texcoord_id);
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	shader->StopUsing();
 }

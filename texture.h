@@ -17,28 +17,29 @@ public:
 
 	void OnDraw(int x, int y) const;
 
+	int width;
+	int height;
+
 private:
 	GLuint texid;
 	GLuint vbo;
-	int width;
-	int height;
 };
 
-class Sprite {
+class VoxelObject {
 public:
-	Sprite(Texture *tex, int x, int y) : tex(tex), x(x), y(y) {}
-	std::unique_ptr<Texture> tex;
+	VoxelObject(Texture *tex, int x, int y) : tex(tex), x(x), y(y) {}
+	Texture* tex;
 	int x, y;
 };
 
 class Container {
 public:
-	std::vector<Sprite> sprites;
+	std::vector<VoxelObject> objects;
 
 	void OnDraw()
 	{
-		for (const auto &sprite : this->sprites) {
-			sprite.tex->OnDraw(sprite.x, sprite.y);
+		for (const auto &obj : this->objects) {
+			obj.tex->OnDraw(obj.x, obj.y);
 		}
 	}
 };

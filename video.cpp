@@ -100,6 +100,8 @@ void Video::OnResize(int w, int h)
 
 	glMatrixMode(GL_MODELVIEW);
 	glLoadIdentity();
+
+	SDL_GetWindowSize(this->window, &this->width, &this->height);
 }
 
 void Video::Loop()
@@ -135,7 +137,6 @@ bool Video::EventLoop()
 	return true;
 }
 
-#include <iostream>
 
 void Video::AddShader(int id, Shader *vert, Shader *frag)
 {
@@ -144,7 +145,7 @@ void Video::AddShader(int id, Shader *vert, Shader *frag)
 		if (it != this->shaders.end()) {
 			this->shaders.erase(it);
 		} else {
-			throw std::runtime_error("Tried to remove non-existant shader: " + std::to_string(id));
+			throw std::runtime_error("Tried to remove non-existent shader: " + std::to_string(id));
 		}
 	}
 	this->shaders.emplace(std::make_pair(id, std::unique_ptr<ShaderProgram>(new ShaderProgram(vert, frag))));
@@ -159,8 +160,13 @@ ShaderProgram *Video::GetShader(int id)
 	return nullptr;
 }
 
+//#include <chrono>
+//#include <iostream>
+
 void Video::Render()
 {
+//	auto start = std::chrono::high_resolution_clock::now();
+
 	glClearColor(0.0, 0.0, 0.0, 0.0);
 	glClear(GL_COLOR_BUFFER_BIT);
 
@@ -170,6 +176,10 @@ void Video::Render()
 	}
 	glPopMatrix();
 
+
+//	auto end = std::chrono::high_resolution_clock::now();
+//	auto diff = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+//	std::cout << "Render loop: " << diff.count() << "ms" << std::endl;
 
 	SDL_GL_SwapWindow(this->window);
 }

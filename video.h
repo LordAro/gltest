@@ -24,6 +24,9 @@ public:
 	void AddShader(int id, Shader *vert, Shader *frag);
 	ShaderProgram *GetShader(int id);
 
+	int width;
+	int height;
+
 private:
 	void Render();
 
