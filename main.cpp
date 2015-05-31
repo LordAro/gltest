@@ -23,6 +23,7 @@ std::string LoadFile(const char *filepath)
 
 int main()
 {
+	std::cout << "ello" << std::endl;
 	try {
 		std::string vert_src = LoadFile("normal.vert.glsl");
 		std::string frag_src = LoadFile("normal.frag.glsl");
