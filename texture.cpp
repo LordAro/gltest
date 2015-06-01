@@ -29,17 +29,16 @@ void Texture::OnDraw(int x, int y) const
 	glColor4f(1, 1, 1, 1); // Should be black?
 
 	auto shader = _vid.GetShader(0);
+	shader->Use();
 
 	// Update parameters
 	glUniform1i(shader->grad_shift_id, 0);
 	float recols[] = {
-		1.0, 1.0, 1.0,
-		1.0, 1.0, 1.0,
+		1.0, 0.0, 0.0,
+		0.0, 0.0, 1.0,
 	};
-	std::cout << shader->recolour << std::endl;
 	glUniform3fv(shader->recolour, 2, recols);
 
-	shader->Use();
 	int *pos_id = &shader->pos_id;
 	int *texcoord_id = &shader->tex_coord;
 

@@ -40,7 +40,7 @@ void main(void) {
 	int mask_col = int(floor(texture2D(mask, tex_position).r * 255.0 + 0.5));
 	if (mask_col != 0) {
 		// something
-		gl_FragColor = vec4(recolour_rgb[0], 1.0);
+		gl_FragColor = vec4(recolour_rgb[mask_col - 1], 1.0);
 		return;
 	}
 
