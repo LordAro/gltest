@@ -75,18 +75,21 @@ ShaderProgram::ShaderProgram(Shader *vert, Shader *frag)
 
 	this->pos_id = glGetAttribLocation(this->id, "vertex_position");
 	this->mvpm_id = glGetUniformLocation(this->id, "mvp_matrix");
-	// assert(this->pos_id != -1 && this->mvpm_id != -1);
 
 	glDetachShader(this->id, vert->id);
 	glDetachShader(this->id, frag->id);
 
-	this->tex_coord = glGetAttribLocation(this->id, "tex_coords");
 	this->texture = glGetUniformLocation(this->id, "texture");
-	this->grad_shift_id = glGetUniformLocation(this->id, "gradient_shift");
-	// assert(this->tex_coord != -1 && this->texture != -1 && this->grad_shift_id != -1);
+	this->mask = glGetUniformLocation(this->id, "mask");
 
-	this->Use();
-	glUniform1i(this->texture, 0); // Necessary?
+	this->grad_shift_id = glGetUniformLocation(this->id, "gradient_shift");
+	this->recolour = glGetUniformLocation(this->id, "recolour_rgb");
+
+	this->tex_coord = glGetAttribLocation(this->id, "tex_coords");
+
+	this->Use(); // Necessary?
+	glUniform1i(this->texture, 0);
+	glUniform1i(this->mask, 1);
 	this->StopUsing();
 }
 

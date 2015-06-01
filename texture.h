@@ -28,7 +28,7 @@ private:
 	static GLuint MakeGLTexture(const std::string &filepath, int *width, int *height);
 	inline bool HasMask() const
 	{
-		return maskid == 0;
+		return this->maskid != 0;
 	}
 
 	GLuint texid;

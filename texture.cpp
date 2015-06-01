@@ -1,3 +1,4 @@
+#include <iostream>
 #include <stdexcept>
 
 #include <SDL2/SDL_image.h>
@@ -31,6 +32,12 @@ void Texture::OnDraw(int x, int y) const
 
 	// Update parameters
 	glUniform1i(shader->grad_shift_id, 0);
+	float recols[] = {
+		1.0, 1.0, 1.0,
+		1.0, 1.0, 1.0,
+	};
+	std::cout << shader->recolour << std::endl;
+	glUniform3fv(shader->recolour, 2, recols);
 
 	shader->Use();
 	int *pos_id = &shader->pos_id;
@@ -62,7 +69,7 @@ void Texture::OnDraw(int x, int y) const
 	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_DYNAMIC_DRAW);
 	glEnableVertexAttribArray(*pos_id);
 	glEnableVertexAttribArray(*texcoord_id);
-	glVertexAttribPointer(*pos_id, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(0));
+	glVertexAttribPointer(*pos_id,      2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(0));
 	glVertexAttribPointer(*texcoord_id, 2, GL_FLOAT, GL_FALSE, 4 * sizeof(float), (void *)(2 * sizeof(float)));
 
 	glDrawArrays(GL_TRIANGLES, 0, 6); // 2 triangles
@@ -80,9 +87,8 @@ void Texture::OnDraw(int x, int y) const
 
 	glGenTextures(1, &texture);
 	if (texture == 0) {
-		const char *glerr = (const char *)gluErrorString(glGetError());
 		std::string err = "Error creating texture: ";
-		err += glerr;
+		err += (const char *)gluErrorString(glGetError());
 		throw std::runtime_error(err);
 	}
 	glBindTexture(GL_TEXTURE_2D, texture);
@@ -91,12 +97,13 @@ void Texture::OnDraw(int x, int y) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 
+	// TODO: Check filepath
 	SDL_Surface *surface = IMG_Load(filepath.c_str());
 	GLint int_format;
 	GLenum format;
 	switch (surface->format->BytesPerPixel) {
-		case 1: // uint8 (paletted)
-			int_format = GL_LUMINANCE;
+		case 1: // uint8 (paletted mask sprite)
+			int_format = GL_RGBA8;
 			format = GL_LUMINANCE;
 			break;
 		case 4: // uint32
