@@ -42,10 +42,9 @@ void Texture::OnDraw(int x, int y) const
 	int *pos_id = &shader->pos_id;
 	int *texcoord_id = &shader->tex_coord;
 
-	if (this->HasMask()) {
-		glActiveTexture(GL_TEXTURE1);
-		glBindTexture(GL_TEXTURE_2D, this->maskid);
-	}
+	// If there's no mask, maskid is bound to the 0 texture, so ends up being a no-op.
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, this->maskid);
 
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, this->texid);

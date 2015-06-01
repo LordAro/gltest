@@ -31,7 +31,7 @@ int main()
 		_vid.AddShader(0, vert, frag);
 		delete vert;
 		delete frag;
-/*
+
 		auto tile = std::unique_ptr<Texture>(new Texture("tile.png"));
 
 		for (int x = -64; x + tile->width < _vid.width; x += 64) {
@@ -41,7 +41,7 @@ int main()
 				_sprite_container.objects.emplace_back(tile.get(), x1, y);
 			}
 		}
-*/
+
 		auto icecream = std::unique_ptr<Texture>(new Texture("icecream.png", "icecream_mask.png"));
 		_sprite_container.objects.emplace_back(icecream.get(), 544, 256);
 
