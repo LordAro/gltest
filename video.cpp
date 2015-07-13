@@ -25,8 +25,8 @@ Video::Video() : running(true)
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
 
 	int flags = SDL_WINDOW_OPENGL | SDL_WINDOW_RESIZABLE;
-	int width = 800;
-	int height = 600;
+	int width = 1024;
+	int height = 768;
 
 	this->window = SDL_CreateWindow("lolpenGL", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, flags);
 	if (this->window == nullptr) {
@@ -146,8 +146,9 @@ void Video::AddShader(int id, Shader *vert, Shader *frag)
 		} else {
 			throw std::runtime_error("Tried to remove non-existent shader: " + std::to_string(id));
 		}
+	} else {
+		this->shaders.emplace(std::make_pair(id, std::unique_ptr<ShaderProgram>(new ShaderProgram(vert, frag))));
 	}
-	this->shaders.emplace(std::make_pair(id, std::unique_ptr<ShaderProgram>(new ShaderProgram(vert, frag))));
 }
 
 ShaderProgram *Video::GetShader(int id)

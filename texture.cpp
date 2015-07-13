@@ -34,8 +34,8 @@ void Texture::OnDraw(int x, int y) const
 	// Update parameters
 	glUniform1i(shader->grad_shift_id, 0);
 	float recols[] = {
+		0.0, 1.0, 0.0,
 		1.0, 0.0, 0.0,
-		0.0, 0.0, 1.0,
 	};
 	glUniform3fv(shader->recolour, 2, recols);
 
