@@ -74,7 +74,6 @@ ShaderProgram::ShaderProgram(Shader *vert, Shader *frag)
 	}
 
 	this->pos_id = glGetAttribLocation(this->id, "vertex_position");
-	this->mvpm_id = glGetUniformLocation(this->id, "mvp_matrix");
 
 	glDetachShader(this->id, vert->id);
 	glDetachShader(this->id, frag->id);

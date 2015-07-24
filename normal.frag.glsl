@@ -28,7 +28,7 @@ void main(void) {
 		// calc Y' from original image & multiply by base colour
 		float orig_luma = RGBToLuma(col.rgb);
 		vec3 converted = orig_luma * recol;
-		converted *= 1.5;
+		converted *= 1.5; // Arbitrary brightness factor
 		col = vec4(converted, col.a);
 	}
 

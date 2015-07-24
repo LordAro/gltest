@@ -28,7 +28,6 @@ public:
 
 	GLint tex_coord;
 	GLint pos_id;
-	GLint mvpm_id;
 	GLint grad_shift_id;
 	GLint recolour;
 

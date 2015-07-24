@@ -1,8 +1,5 @@
 #version 120
 
-// Modelview*projection matrix
-uniform mat4 mvp_matrix;
-
 // Position of this vertex
 attribute vec4 vertex_position;
 
