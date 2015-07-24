@@ -86,7 +86,8 @@ ShaderProgram::ShaderProgram(Shader *vert, Shader *frag)
 
 	this->tex_coord = glGetAttribLocation(this->id, "tex_coords");
 
-	this->Use(); // Necessary?
+	// Need to use the shader to set uniforms
+	this->Use();
 	glUniform1i(this->texture, 0);
 	glUniform1i(this->mask, 1);
 	this->StopUsing();
